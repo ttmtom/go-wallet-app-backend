@@ -1,17 +1,23 @@
 package wallet_system
 
 import (
-	adapter "go-wallet-system/wallet_system/adapter/storage/types"
+	adapterTypes "go-wallet-system/wallet_system/adapter/storage/types"
+	"go-wallet-system/wallet_system/core/module"
 	"go-wallet-system/wallet_system/core/types"
 )
 
 type WalletSystem struct {
-	User        types.UserController
-	Wallet      types.WalletController
-	Transaction types.TransactionController
+	User   types.UserController
+	Wallet types.WalletController
 }
 
-func New(db adapter.Storage) *WalletSystem {
+func New(db adapterTypes.Storage) *WalletSystem {
+	//tm := module.NewTransactionModule(db)
+	wm := module.NewWalletModule(db)
+	um := module.NewUserModule(db, wm.Repository)
 
-	return &WalletSystem{}
+	return &WalletSystem{
+		User:   um.Controller,
+		Wallet: wm.Controller,
+	}
 }

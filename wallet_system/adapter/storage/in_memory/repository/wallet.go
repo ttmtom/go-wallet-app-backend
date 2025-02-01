@@ -16,24 +16,17 @@ func NewWalletRepository() coreTypes.WalletRepository {
 	return &WalletRepository{store: store}
 }
 
-func (w WalletRepository) GetBalance(userId string) (float64, error) {
-	if wallet, exists := w.store[userId]; exists {
-		return wallet.Balance, nil
+func (wr WalletRepository) Create(wallet *model.Wallet) error {
+	if _, exists := wr.store[wallet.Username]; exists {
+		return errors.New("wallet already exists")
 	}
-	return 0, errors.New("user not found")
+	wr.store[wallet.Username] = wallet
+	return nil
 }
 
-func (w WalletRepository) SendTransaction(from, to string, amount float64) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (w WalletRepository) Deposit(to string, amount float64) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (w WalletRepository) Withdraw(to string, amount float64) error {
-	//TODO implement me
-	panic("implement me")
+func (wr WalletRepository) FindById(id string) *model.Wallet {
+	if wallet, exists := wr.store[id]; exists {
+		return wallet
+	}
+	return nil
 }

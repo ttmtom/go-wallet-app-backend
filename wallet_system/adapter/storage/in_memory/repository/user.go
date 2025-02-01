@@ -16,17 +16,17 @@ func NewUserRepository() coreTypes.UserRepository {
 	return &UserRepository{store: store}
 }
 
-func (u UserRepository) FindUserByID(id string) (*model.User, error) {
-	if user, exists := u.store[id]; exists {
-		return user, nil
+func (ur UserRepository) FindByID(id string) *model.User {
+	if user, exists := ur.store[id]; exists {
+		return user
 	}
-	return nil, errors.New("user not found")
+	return nil
 }
 
-func (u UserRepository) CreateUser(user *model.User) error {
-	if _, exists := u.store[user.ID]; exists {
+func (ur UserRepository) Create(user *model.User) error {
+	if _, exists := ur.store[user.Name]; exists {
 		return errors.New("user already exists")
 	}
-	u.store[user.ID] = user
+	ur.store[user.Name] = user
 	return nil
 }

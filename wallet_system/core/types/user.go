@@ -3,12 +3,16 @@ package types
 import "go-wallet-system/wallet_system/core/model"
 
 type UserRepository interface {
-	FindUserByID(id string) (*model.User, error)
-	CreateUser(user *model.User) error
+	FindByID(id string) *model.User
+	Create(user *model.User) error
 }
 
 type UserService interface {
+	UserRegistration(name string) error
+	UserInfo(name string) error
 }
 
 type UserController interface {
+	UserRegister(name string) error
+	UserInfo(name string) error
 }

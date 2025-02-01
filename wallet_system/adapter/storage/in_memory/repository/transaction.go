@@ -6,10 +6,12 @@ import (
 )
 
 type TransactionRepository struct {
+	store map[string]*model.Transaction
 }
 
 func NewTransactionRepository() coreTypes.TransactionRepository {
-	return &TransactionRepository{}
+	store := make(map[string]*model.Transaction)
+	return &TransactionRepository{store: store}
 }
 
 func (t TransactionRepository) CreateTransaction(transaction *model.Transaction) error {
