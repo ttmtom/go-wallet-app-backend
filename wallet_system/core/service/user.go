@@ -19,21 +19,26 @@ func NewUserService(ur types.UserRepository, wr types.WalletRepository, tr types
 }
 
 func (us UserService) UserRegistration(name string) error {
+	fmt.Println("us.userRepository")
+	fmt.Println(us.userRepository)
 	user := us.userRepository.FindByID(name)
+
 	if user != nil {
 		return errors.New("user already exists")
 	}
-	newUser := &model.User{Name: name}
+
+	newUser := model.NewUser(name)
 	err := us.userRepository.Create(newUser)
 	if err != nil {
 		return err
 	}
 
-	newWallet := &model.Wallet{Username: name, Balance: 0}
+	newWallet := model.NewWallet(name, 0)
 	err = us.walletRepository.Create(newWallet)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 

@@ -2,6 +2,8 @@ package types
 
 import "go-wallet-system/wallet_system/core/model"
 
+//go:generate mockgen -source=wallet.go -destination=../../../test/mock/wallet.go -package=mock
+
 type WalletRepository interface {
 	Create(wallet *model.Wallet) error
 	FindById(id string) *model.Wallet
