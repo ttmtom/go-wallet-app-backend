@@ -40,8 +40,10 @@ func TestUserService_UserRegistration(t *testing.T) {
 				walletRepo *mock.MockWalletRepository,
 				transactionRepo *mock.MockTransactionRepository,
 			) {
-				userRepo.EXPECT().Create(gomock.Eq(model.NewUser(username))).Times(1).Return(nil)
+				// expected the username not exists on the db
 				userRepo.EXPECT().FindByID(gomock.Eq(username)).Times(1).Return(nil)
+				// expected to call repo to create a new user and wallet
+				userRepo.EXPECT().Create(gomock.Eq(model.NewUser(username))).Times(1).Return(nil)
 				walletRepo.EXPECT().Create(gomock.Eq(model.NewWallet(username, 0))).Times(1).Return(nil)
 			},
 			input: userRegistrationInput{
@@ -86,11 +88,10 @@ func TestUserService_UserRegistration(t *testing.T) {
 
 			err := userService.UserRegistration(username)
 
-			if tc.expected.err != nil {
-				if !errors.Is(err, tc.expected.err) {
-					t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
-				}
-				return
+			if err != nil && tc.expected.err == nil ||
+				err == nil && tc.expected.err != nil ||
+				tc.expected.err != nil && !errors.Is(err, tc.expected.err) {
+				t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
 			}
 		})
 	}
@@ -208,12 +209,12 @@ func TestUserService_UserInfo(t *testing.T) {
 
 			userInfo, err := userService.UserInfo(username)
 
-			if tc.expected.err != nil {
-				if !errors.Is(err, tc.expected.err) {
-					t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
-				}
-				return
+			if err != nil && tc.expected.err == nil ||
+				err == nil && tc.expected.err != nil ||
+				tc.expected.err != nil && !errors.Is(err, tc.expected.err) {
+				t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
 			}
+
 			if userInfo == nil && tc.expected.userInfo != nil {
 				t.Errorf("[case: %s] expected to get user info %+v; got nil", tc.desc, *tc.expected.userInfo)
 			} else if userInfo != nil && tc.expected.userInfo == nil {
