@@ -23,10 +23,10 @@ func (uc UserController) UserRegister(name string) error {
 	return uc.userService.UserRegistration(name)
 }
 
-func (uc UserController) GetUserInfo(name string) error {
+func (uc UserController) GetUserInfo(name string) (*types.UserInfo, error) {
 	// user input validation
 	if vali := share.UsernameValidation(name); !vali {
-		return errors.New("invalid name format")
+		return nil, errors.New("invalid name format")
 	}
 
 	return uc.userService.UserInfo(name)
