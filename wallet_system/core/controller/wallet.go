@@ -38,6 +38,9 @@ func (wc WalletController) Withdraw(username string, amount string) error {
 }
 
 func (wc WalletController) Transfer(fromUsername string, toUsername string, amount string) error {
+	if fromUsername == toUsername {
+		return share.InvalidNameInputError
+	}
 	if vali := share.UsernameValidation(fromUsername); !vali {
 		return share.InvalidNameInputError
 	}
