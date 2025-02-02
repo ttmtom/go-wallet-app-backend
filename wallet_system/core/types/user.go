@@ -11,15 +11,15 @@ type UserRepository interface {
 
 type UserService interface {
 	UserRegistration(name string) error
-	UserInfo(name string) (userInfo *UserInfo, err error)
+	UserInfo(name string) (userInfo *UserInfoResponse, err error)
 }
 
-type UserInfo struct {
+type UserInfoResponse struct {
 	Wallet               *model.Wallet
 	TransactionHistories []*model.Transaction
 }
 
 type UserController interface {
 	UserRegister(name string) error
-	GetUserInfo(name string) (info *UserInfo, err error)
+	GetUserInfo(name string) (info *UserInfoResponse, err error)
 }

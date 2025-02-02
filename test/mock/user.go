@@ -94,10 +94,10 @@ func (m *MockUserService) EXPECT() *MockUserServiceMockRecorder {
 }
 
 // UserInfo mocks base method.
-func (m *MockUserService) UserInfo(name string) (*types.UserInfo, error) {
+func (m *MockUserService) UserInfo(name string) (*types.UserInfoResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UserInfo", name)
-	ret0, _ := ret[0].(*types.UserInfo)
+	ret := m.ctrl.Call(m, "UserInfoResponse", name)
+	ret0, _ := ret[0].(*types.UserInfoResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -105,7 +105,7 @@ func (m *MockUserService) UserInfo(name string) (*types.UserInfo, error) {
 // UserInfo indicates an expected call of UserInfo.
 func (mr *MockUserServiceMockRecorder) UserInfo(name any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserInfo", reflect.TypeOf((*MockUserService)(nil).UserInfo), name)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserInfoResponse", reflect.TypeOf((*MockUserService)(nil).UserInfo), name)
 }
 
 // UserRegistration mocks base method.
@@ -147,10 +147,10 @@ func (m *MockUserController) EXPECT() *MockUserControllerMockRecorder {
 }
 
 // GetUserInfo mocks base method.
-func (m *MockUserController) GetUserInfo(name string) (*types.UserInfo, error) {
+func (m *MockUserController) GetUserInfo(name string) (*types.UserInfoResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserInfo", name)
-	ret0, _ := ret[0].(*types.UserInfo)
+	ret0, _ := ret[0].(*types.UserInfoResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

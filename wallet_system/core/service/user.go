@@ -38,14 +38,14 @@ func (us UserService) UserRegistration(name string) error {
 	return nil
 }
 
-func (us UserService) UserInfo(name string) (*types.UserInfo, error) {
+func (us UserService) UserInfo(name string) (*types.UserInfoResponse, error) {
 	user := us.userRepository.FindByID(name)
 	if user == nil {
 		return nil, share.UserNotFoundError
 	}
 	wallet := us.walletRepository.FindById(name)
 	histories := us.transactionRepository.GetAllByUserID(name)
-	userInfo := &types.UserInfo{
+	userInfo := &types.UserInfoResponse{
 		Wallet:               wallet,
 		TransactionHistories: histories,
 	}
