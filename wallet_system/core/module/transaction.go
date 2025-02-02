@@ -11,5 +11,7 @@ type TransactionModule struct {
 }
 
 func NewTransactionModule(db adapterTypes.Storage) *TransactionModule {
-	return &TransactionModule{}
+	tr := db.GetTransactionRepository()
+
+	return &TransactionModule{Repository: tr}
 }

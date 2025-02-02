@@ -13,9 +13,9 @@ type UserModule struct {
 	Controller types.UserController
 }
 
-func NewUserModule(db adapterTypes.Storage, wm types.WalletRepository) *UserModule {
+func NewUserModule(db adapterTypes.Storage, wr types.WalletRepository, tr types.TransactionRepository) *UserModule {
 	ur := db.GetUserRepository()
-	us := service.NewUserService(ur, wm)
+	us := service.NewUserService(ur, wr, tr)
 	uc := controller.NewUserController(us)
 
 	return &UserModule{

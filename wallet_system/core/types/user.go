@@ -14,5 +14,5 @@ type UserService interface {
 
 type UserController interface {
 	UserRegister(name string) error
-	UserInfo(name string) error
+	GetUserInfo(name string) error
 }

@@ -13,10 +13,10 @@ type WalletModule struct {
 	Controller types.WalletController
 }
 
-func NewWalletModule(db adapterTypes.Storage) *WalletModule {
+func NewWalletModule(db adapterTypes.Storage, tr types.TransactionRepository) *WalletModule {
 	wr := db.GetWalletRepository()
-	ws := service.NewWalletService()
-	wc := controller.NewWallController()
+	ws := service.NewWalletService(wr, tr)
+	wc := controller.NewWalletController(ws)
 
 	return &WalletModule{Repository: wr, Service: ws, Controller: wc}
 }

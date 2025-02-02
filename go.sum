@@ -1,0 +1,4 @@
+github.com/dpotapov/slogpfx v0.0.0-20230917063348-41a73c95c536 h1:3ZUyGIhpbUJVL3nwGRJO/DH1GRNb3qhKOteP1tMwFrA=
+github.com/dpotapov/slogpfx v0.0.0-20230917063348-41a73c95c536/go.mod h1:L9xGyDDA8E/83ucQSIKU/ZU3YfS3BzhyynT0ykxJGCk=
+github.com/shopspring/decimal v1.4.0 h1:bxl37RwXBklmTi0C79JfXCEBD1cqqHt0bbgBAGFp81k=
+github.com/shopspring/decimal v1.4.0/go.mod h1:gawqmDU56v4yIKSwfBSFip1HdCCXN8/+DMd9qYNcwME=

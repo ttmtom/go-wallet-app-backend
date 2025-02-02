@@ -2,28 +2,27 @@ package main
 
 import (
 	"fmt"
-	"go-wallet-system/pkg/logger"
+
+	"go-wallet-system/pkg/utils"
 	"go-wallet-system/wallet_system"
 	"go-wallet-system/wallet_system/adapter/storage/in_memory"
-	"os"
+	"go-wallet-system/wallet_system/adapter/storage/types"
 )
 
 func main() {
-	logger.Init()
 	db := in_memory.New()
-	ws := wallet_system.New(db)
 
 	quit := make(chan int)
 
-	go func() {
-		run(ws, quit)
-	}()
+	go run(db, quit)
 
 	<-quit
-	fmt.Println("Good bye")
+	fmt.Println("~ Good bye ~")
 }
 
-func run(ws *wallet_system.WalletSystem, quit chan int) {
+func run(db types.Storage, quit chan int) {
+	ws := wallet_system.New(db)
+
 	fmt.Println("-----------------------------")
 	fmt.Println("Go wallet backend system testing")
 	fmt.Println("-----------------------------")
@@ -31,25 +30,25 @@ func run(ws *wallet_system.WalletSystem, quit chan int) {
 	fmt.Println("1. register: user Register and init wallet")
 	fmt.Println("2. deposit: Deposit money")
 	fmt.Println("3. withdraw: Withdraw money")
-	fmt.Println("4. transaction: Withdraw money")
+	fmt.Println("4. transfer: Withdraw money")
 	fmt.Println("5. info: Check balance")
-	fmt.Println("6. exit: end the system")
+	fmt.Println("6. exit: Exit the system")
 	fmt.Println("-----------------------------")
 
 	for {
 		var cmd string
 		fmt.Println("Enter command")
-		getUserInput(&cmd)
+		utils.GetUserInput(&cmd)
 		fmt.Println("Command:", cmd)
 		switch cmd {
 		case "register":
 			registerHandler(ws)
 		case "deposit":
-			// Implement deposit logic here
+			depositHandler(ws)
 		case "withdraw":
-			// Implement withdrawal logic here
-		case "transaction":
-			// Implement transaction logic here
+			withdrawHandler(ws)
+		case "transfer":
+			transferHandler(ws)
 		case "info":
 			userInfoHandler(ws)
 		case "exit":
@@ -62,20 +61,13 @@ func run(ws *wallet_system.WalletSystem, quit chan int) {
 	}
 }
 
-func getUserInput(p *string) {
-	_, err := fmt.Scan(p)
-	if err != nil {
-		fmt.Println("Error reading input:", err)
-		os.Exit(1)
-	}
-}
-
 func registerHandler(ws *wallet_system.WalletSystem) {
 	fmt.Println("Enter username")
 	var username string
-	getUserInput(&username)
+	utils.GetUserInput(&username)
 
 	err := ws.User.UserRegister(username)
+
 	if err != nil {
 		fmt.Println("error on user register: ", err.Error())
 	} else {
@@ -86,11 +78,67 @@ func registerHandler(ws *wallet_system.WalletSystem) {
 func userInfoHandler(ws *wallet_system.WalletSystem) {
 	fmt.Println("Enter username")
 	var username string
-	getUserInput(&username)
-	err := ws.User.UserInfo(username)
+	utils.GetUserInput(&username)
+
+	err := ws.User.GetUserInfo(username)
+
 	if err != nil {
 		fmt.Println("error on get user info: ", err.Error())
 	} else {
 		fmt.Println("user info end")
+	}
+}
+
+func depositHandler(ws *wallet_system.WalletSystem) {
+	fmt.Println("Enter username")
+	var username string
+	utils.GetUserInput(&username)
+	fmt.Println("Enter amount to deposit")
+	var amount string
+	utils.GetUserInput(&amount)
+
+	err := ws.Wallet.Deposit(username, amount)
+
+	if err != nil {
+		fmt.Println("error on deposit: ", err.Error())
+	} else {
+		fmt.Println("deposit done")
+	}
+}
+
+func withdrawHandler(ws *wallet_system.WalletSystem) {
+	fmt.Println("Enter username")
+	var username string
+	utils.GetUserInput(&username)
+	fmt.Println("Enter amount to withdraw")
+	var amount string
+	utils.GetUserInput(&amount)
+
+	err := ws.Wallet.Withdraw(username, amount)
+
+	if err != nil {
+		fmt.Println("error on withdraw: ", err.Error())
+	} else {
+		fmt.Println("withdrawal done")
+	}
+}
+
+func transferHandler(ws *wallet_system.WalletSystem) {
+	fmt.Println("Enter from username")
+	var from string
+	utils.GetUserInput(&from)
+	fmt.Println("Enter to username")
+	var to string
+	utils.GetUserInput(&to)
+	fmt.Println("Enter amount to transfer")
+	var amount string
+	utils.GetUserInput(&amount)
+
+	err := ws.Wallet.Transfer(from, to, amount)
+
+	if err != nil {
+		fmt.Println("error on transfer: ", err.Error())
+	} else {
+		fmt.Println("transaction done")
 	}
 }

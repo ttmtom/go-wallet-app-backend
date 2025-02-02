@@ -12,9 +12,9 @@ type WalletSystem struct {
 }
 
 func New(db adapterTypes.Storage) *WalletSystem {
-	//tm := module.NewTransactionModule(db)
-	wm := module.NewWalletModule(db)
-	um := module.NewUserModule(db, wm.Repository)
+	tm := module.NewTransactionModule(db)
+	wm := module.NewWalletModule(db, tm.Repository)
+	um := module.NewUserModule(db, wm.Repository, tm.Repository)
 
 	return &WalletSystem{
 		User:   um.Controller,

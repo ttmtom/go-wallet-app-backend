@@ -2,7 +2,7 @@ package controller
 
 import (
 	"errors"
-	"go-wallet-system/pkg/utils"
+	"go-wallet-system/wallet_system/core/share"
 	"go-wallet-system/wallet_system/core/types"
 )
 
@@ -16,16 +16,16 @@ func NewUserController(userService types.UserService) types.UserController {
 
 func (uc UserController) UserRegister(name string) error {
 	// user input validation
-	if vali := utils.Validate(name, `^[a-zA-Z0-9_]{3,20}$`); !vali {
+	if vali := share.UsernameValidation(name); !vali {
 		return errors.New("invalid name format")
 	}
 
 	return uc.userService.UserRegistration(name)
 }
 
-func (uc UserController) UserInfo(name string) error {
+func (uc UserController) GetUserInfo(name string) error {
 	// user input validation
-	if vali := utils.Validate(name, `^[a-zA-Z0-9_]{3,20}$`); !vali {
+	if vali := share.UsernameValidation(name); !vali {
 		return errors.New("invalid name format")
 	}
 

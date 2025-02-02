@@ -30,3 +30,13 @@ func (wr WalletRepository) FindById(id string) *model.Wallet {
 	}
 	return nil
 }
+
+func (wr WalletRepository) Update(wallet *model.Wallet) error {
+	if _, exists := wr.store[wallet.Username]; !exists {
+		return errors.New("wallet not found")
+	}
+
+	wr.store[wallet.Username] = wallet
+
+	return nil
+}

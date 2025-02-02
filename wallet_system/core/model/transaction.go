@@ -1,6 +1,12 @@
 package model
 
-/** Transaction struct,
+import (
+	"fmt"
+	"github.com/shopspring/decimal"
+	"time"
+)
+
+/** Transfer struct,
 * represents a financial transaction.
 * Fields:
 * - ID: unique identifier for the transaction.
@@ -13,18 +19,43 @@ package model
 * It can be extended with additional fields or methods as needed for specific use cases.
 *
 * Example usage:
-*   tx := Transaction{
+*   tx := Transfer{
 *       ID:        1,
 *       From:      "123456789",
 *       To:        "987654321",
 *       Amount:    100.0,
-*       Timestamp: time.Now().Format("2006-01-02T15:04:05Z"),
+*       Timestamp: time.Now(),
  */
 
 type Transaction struct {
-	ID        int
+	ID        string
 	From      *string
 	To        *string
 	Amount    float64
-	Timestamp string
+	Timestamp int
+}
+
+func NewTransaction(actionType string, userId, from, to *string, amount float64) *Transaction {
+	now := time.Now()
+
+	return &Transaction{
+		ID:        fmt.Sprintf("%s-%s-%d", actionType, userId, now.Unix()),
+		From:      from,
+		To:        to,
+		Amount:    amount,
+		Timestamp: int(now.Unix()),
+	}
+}
+
+func (t *Transaction) String() string {
+	actionType := "Transfer"
+	if t.From == nil {
+		actionType = "Deposit"
+		return fmt.Sprintf("Type: %s,  Amount: %f, Timestamp: %s", actionType, decimal.NewFromFloat(t.Amount).InexactFloat64(), time.Unix(int64(t.Timestamp), 0))
+	} else if t.To == nil {
+		actionType = "Withdrawal"
+		return fmt.Sprintf("Type: %s,  Amount: %f, Timestamp: %s", actionType, decimal.NewFromFloat(t.Amount).InexactFloat64(), time.Unix(int64(t.Timestamp), 0))
+	}
+
+	return fmt.Sprintf("Type: %s, From: %v, To: %v, Amount: %f, Timestamp: %s", actionType, *t.From, *t.To, decimal.NewFromFloat(t.Amount).InexactFloat64(), time.Unix(int64(t.Timestamp), 0))
 }
