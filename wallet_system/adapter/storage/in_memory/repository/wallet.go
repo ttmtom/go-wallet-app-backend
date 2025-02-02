@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"errors"
 	"go-wallet-system/wallet_system/core/model"
+	"go-wallet-system/wallet_system/core/share"
 	coreTypes "go-wallet-system/wallet_system/core/types"
 )
 
@@ -18,7 +18,7 @@ func NewWalletRepository() coreTypes.WalletRepository {
 
 func (wr WalletRepository) Create(wallet *model.Wallet) error {
 	if _, exists := wr.store[wallet.Username]; exists {
-		return errors.New("wallet already exists")
+		return share.WalletAlreadyExistsError
 	}
 	wr.store[wallet.Username] = wallet
 	return nil
@@ -33,7 +33,7 @@ func (wr WalletRepository) FindById(id string) *model.Wallet {
 
 func (wr WalletRepository) Update(wallet *model.Wallet) error {
 	if _, exists := wr.store[wallet.Username]; !exists {
-		return errors.New("wallet not found")
+		return share.WalletNotFoundError
 	}
 
 	wr.store[wallet.Username] = wallet

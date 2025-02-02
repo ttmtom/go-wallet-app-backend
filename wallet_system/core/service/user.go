@@ -1,9 +1,8 @@
 package service
 
 import (
-	"errors"
-	"fmt"
 	"go-wallet-system/wallet_system/core/model"
+	"go-wallet-system/wallet_system/core/share"
 	"go-wallet-system/wallet_system/core/types"
 )
 
@@ -18,12 +17,10 @@ func NewUserService(ur types.UserRepository, wr types.WalletRepository, tr types
 }
 
 func (us UserService) UserRegistration(name string) error {
-	fmt.Println("us.userRepository")
-	fmt.Println(us.userRepository)
 	user := us.userRepository.FindByID(name)
 
 	if user != nil {
-		return errors.New("user already exists")
+		return share.UserExistsError
 	}
 
 	newUser := model.NewUser(name)
@@ -44,7 +41,7 @@ func (us UserService) UserRegistration(name string) error {
 func (us UserService) UserInfo(name string) (*types.UserInfo, error) {
 	user := us.userRepository.FindByID(name)
 	if user == nil {
-		return nil, errors.New("user not found")
+		return nil, share.UserNotFoundError
 	}
 	wallet := us.walletRepository.FindById(name)
 	histories := us.transactionRepository.GetAllByUserID(name)

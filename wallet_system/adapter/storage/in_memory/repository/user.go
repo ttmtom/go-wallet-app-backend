@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"errors"
 	"go-wallet-system/wallet_system/core/model"
+	"go-wallet-system/wallet_system/core/share"
 	coreTypes "go-wallet-system/wallet_system/core/types"
 )
 
@@ -25,7 +25,7 @@ func (ur UserRepository) FindByID(id string) *model.User {
 
 func (ur UserRepository) Create(user *model.User) error {
 	if _, exists := ur.store[user.Name]; exists {
-		return errors.New("user already exists")
+		return share.UserExistsError
 	}
 	ur.store[user.Name] = user
 	return nil

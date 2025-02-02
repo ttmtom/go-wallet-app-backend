@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"go-wallet-system/wallet_system/core/share"
 	"go-wallet-system/wallet_system/core/types"
 )
@@ -16,11 +15,11 @@ func NewWalletController(ws types.WalletService) types.WalletController {
 
 func (wc WalletController) Deposit(username string, amount string) error {
 	if vali := share.UsernameValidation(username); !vali {
-		return errors.New("invalid name format")
+		return share.InvalidNameInputError
 	}
 	floatAmount := share.AmountValidationAndConversation(amount)
 	if floatAmount == nil {
-		return errors.New("invalid amount format")
+		return share.InvalidAmountInputError
 	}
 
 	return wc.walletService.Deposit(username, *floatAmount)
@@ -28,11 +27,11 @@ func (wc WalletController) Deposit(username string, amount string) error {
 
 func (wc WalletController) Withdraw(username string, amount string) error {
 	if vali := share.UsernameValidation(username); !vali {
-		return errors.New("invalid name format")
+		return share.InvalidNameInputError
 	}
 	floatAmount := share.AmountValidationAndConversation(amount)
 	if floatAmount == nil {
-		return errors.New("invalid amount format")
+		return share.InvalidAmountInputError
 	}
 
 	return wc.walletService.Withdraw(username, *floatAmount)
@@ -40,14 +39,14 @@ func (wc WalletController) Withdraw(username string, amount string) error {
 
 func (wc WalletController) Transfer(fromUsername string, toUsername string, amount string) error {
 	if vali := share.UsernameValidation(fromUsername); !vali {
-		return errors.New("invalid name format")
+		return share.InvalidNameInputError
 	}
 	if vali := share.UsernameValidation(toUsername); !vali {
-		return errors.New("invalid name format")
+		return share.InvalidNameInputError
 	}
 	floatAmount := share.AmountValidationAndConversation(amount)
 	if floatAmount == nil {
-		return errors.New("invalid amount format")
+		return share.InvalidAmountInputError
 	}
 
 	return wc.walletService.Transfer(fromUsername, toUsername, *floatAmount)

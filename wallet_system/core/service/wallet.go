@@ -1,9 +1,9 @@
 package service
 
 import (
-	"errors"
 	"github.com/shopspring/decimal"
 	"go-wallet-system/wallet_system/core/model"
+	"go-wallet-system/wallet_system/core/share"
 	"go-wallet-system/wallet_system/core/types"
 )
 
@@ -19,7 +19,7 @@ func NewWalletService(wr types.WalletRepository, tr types.TransactionRepository)
 func (w WalletService) Deposit(userId string, amount float64) error {
 	wallet := w.walletRepository.FindById(userId)
 	if wallet == nil {
-		return errors.New("wallet not found")
+		return share.WalletNotFoundError
 	}
 
 	insertAmount := decimal.NewFromFloat(amount)
@@ -46,14 +46,14 @@ func (w WalletService) Deposit(userId string, amount float64) error {
 func (w WalletService) Withdraw(userId string, amount float64) error {
 	wallet := w.walletRepository.FindById(userId)
 	if wallet == nil {
-		return errors.New("wallet not found")
+		return share.WalletNotFoundError
 	}
 
 	insertAmount := decimal.NewFromFloat(amount)
 	walletAmount := decimal.NewFromFloat(wallet.Balance)
 
 	if walletAmount.LessThan(insertAmount) {
-		return errors.New("insufficient amount")
+		return share.InsufficientBalanceError
 	}
 
 	newAmount := walletAmount.Sub(insertAmount)
@@ -79,7 +79,7 @@ func (w WalletService) Transfer(from, to string, amount float64) error {
 	fromWallet := w.walletRepository.FindById(from)
 	toWallet := w.walletRepository.FindById(to)
 	if fromWallet == nil || toWallet == nil {
-		return errors.New("wallet not found")
+		return share.WalletNotFoundError
 	}
 
 	actionAmount := decimal.NewFromFloat(amount)
@@ -87,7 +87,7 @@ func (w WalletService) Transfer(from, to string, amount float64) error {
 	toWalletAmount := decimal.NewFromFloat(toWallet.Balance)
 
 	if fromWalletAmount.LessThan(actionAmount) {
-		return errors.New("insufficient amount")
+		return share.InsufficientBalanceError
 	}
 
 	newFromAmount := fromWalletAmount.Sub(actionAmount)

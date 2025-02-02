@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"errors"
 	"go-wallet-system/wallet_system/core/model"
+	"go-wallet-system/wallet_system/core/share"
 	coreTypes "go-wallet-system/wallet_system/core/types"
 )
 
@@ -18,7 +18,7 @@ func NewTransactionRepository() coreTypes.TransactionRepository {
 
 func (t TransactionRepository) Insert(transaction *model.Transaction) error {
 	if _, exists := t.store[transaction.ID]; exists {
-		return errors.New("unexpected error")
+		return share.UnexpectedError
 	}
 
 	t.store[transaction.ID] = transaction

@@ -5,6 +5,7 @@ import (
 	"go-wallet-system/test/mock"
 	"go-wallet-system/wallet_system/core/model"
 	"go-wallet-system/wallet_system/core/service"
+	"go-wallet-system/wallet_system/core/share"
 	"go.uber.org/mock/gomock"
 	"testing"
 )
@@ -48,6 +49,22 @@ func TestUserService_UserRegistration(t *testing.T) {
 				err: nil,
 			},
 		},
+		{
+			desc: "UserExisted_UserRegistration",
+			mocks: func(
+				userRepo *mock.MockUserRepository,
+				walletRepo *mock.MockWalletRepository,
+				transaction *mock.MockTransactionRepository,
+			) {
+				userRepo.EXPECT().FindByID(gomock.Eq(username)).Times(1).Return(model.NewUser(username))
+			},
+			input: userRegistrationInput{
+				username: username,
+			},
+			expected: userRegistrationExpectedOutput{
+				err: share.UserExistsError,
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -67,10 +84,11 @@ func TestUserService_UserRegistration(t *testing.T) {
 
 			err := userService.UserRegistration(username)
 
-			if errors.Is(err, tc.expected.err) {
+			if tc.expected.err != nil {
+				if !errors.Is(err, tc.expected.err) {
+					t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
+				}
 				return
-			} else {
-				t.Errorf("[case: %s] expected to get error %v; got %v", tc.desc, tc.expected.err, err)
 			}
 		})
 	}
