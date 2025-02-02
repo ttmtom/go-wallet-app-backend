@@ -6,6 +6,3 @@ type TransactionRepository interface {
 	Insert(transaction *model.Transaction) error
 	GetAllByUserID(userID string) []*model.Transaction
 }
-
-type TransactionService interface {
-}

@@ -7,7 +7,6 @@ import (
 
 type TransactionModule struct {
 	Repository types.TransactionRepository
-	Service    types.TransactionService
 }
 
 func NewTransactionModule(db adapterTypes.Storage) *TransactionModule {

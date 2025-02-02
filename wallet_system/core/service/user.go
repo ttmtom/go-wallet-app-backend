@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"github.com/shopspring/decimal"
 	"go-wallet-system/wallet_system/core/model"
 	"go-wallet-system/wallet_system/core/types"
 )
@@ -45,7 +46,7 @@ func (us UserService) UserInfo(name string) error {
 	histories := us.transactionRepository.GetAllByUserID(name)
 	fmt.Println("`````````````````````````````")
 	fmt.Println("Username: ", user.Name)
-	fmt.Println("Wallet Balance: ", wallet.Balance)
+	fmt.Println(fmt.Sprintf("Wallet Balance: %f", decimal.NewFromFloat(wallet.Balance).InexactFloat64()))
 	fmt.Println("Transaction history")
 	for _, v := range histories {
 		fmt.Println(v)

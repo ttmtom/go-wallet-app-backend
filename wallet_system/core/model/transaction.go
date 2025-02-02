@@ -39,7 +39,7 @@ func NewTransaction(actionType string, userId, from, to *string, amount float64)
 	now := time.Now()
 
 	return &Transaction{
-		ID:        fmt.Sprintf("%s-%s-%d", actionType, userId, now.Unix()),
+		ID:        fmt.Sprintf("%s-%s-%d", actionType, *userId, now.Unix()),
 		From:      from,
 		To:        to,
 		Amount:    amount,
