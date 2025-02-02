@@ -44,7 +44,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should call the user registration method with the correct username and return nil error.
+				// it should call the service with the correct username and return nil error.
 				walletService.EXPECT().Deposit(gomock.Eq(username), floatAmount).Times(1).Return(nil)
 			},
 			input: walletDepositInput{
@@ -60,7 +60,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: usernameTooLongCase,
@@ -75,7 +75,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: usernameTooShortCase,
@@ -90,7 +90,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: usernameInvalidCase,
@@ -105,7 +105,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: username,
@@ -120,7 +120,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: username,
@@ -135,7 +135,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: username,
@@ -150,7 +150,7 @@ func TestWalletController_WalletDeposit(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletDepositInput{
 				username: username,
@@ -221,7 +221,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should call the user registration method with the correct username and return nil error.
+				// it should call the service with the correct username and return nil error.
 				walletService.EXPECT().Withdraw(gomock.Eq(username), floatAmount).Times(1).Return(nil)
 			},
 			input: walletWithdrawInput{
@@ -237,7 +237,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: usernameTooLongCase,
@@ -252,7 +252,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: usernameTooShortCase,
@@ -267,7 +267,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: usernameInvalidCase,
@@ -282,7 +282,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: username,
@@ -297,7 +297,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: username,
@@ -312,7 +312,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: username,
@@ -327,7 +327,7 @@ func TestWalletController_WalletWithdraw(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletWithdrawInput{
 				username: username,
@@ -404,7 +404,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should call the user registration method with the correct fromUsername and return nil error.
+				// it should call the service with the correct fromUsername and return nil error.
 				walletService.EXPECT().Transfer(gomock.Eq(fromUsername), gomock.Eq(toUsername), gomock.Eq(floatAmount)).Times(1).Return(nil)
 			},
 			input: walletTransferInput{
@@ -421,7 +421,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -437,7 +437,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsernameTooLongCase,
@@ -453,7 +453,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsernameTooShortCase,
@@ -469,7 +469,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsernameInvalidCase,
@@ -486,7 +486,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -502,7 +502,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -518,7 +518,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -534,7 +534,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -550,7 +550,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -566,7 +566,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,
@@ -582,7 +582,7 @@ func TestWalletController_WalletTransfer(t *testing.T) {
 			mocks: func(
 				walletService *mock.MockWalletService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: walletTransferInput{
 				fromUsername: fromUsername,

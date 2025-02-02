@@ -39,7 +39,7 @@ func TestUserController_UserRegister(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should call the user registration method with the correct username and return nil error.
+				// it should call the service with the correct username and return nil error.
 				userService.EXPECT().UserRegistration(gomock.Eq(username)).Times(1).Return(nil)
 			},
 			input: userRegisterInput{
@@ -54,7 +54,7 @@ func TestUserController_UserRegister(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: userRegisterInput{
 				username: usernameTooLongCase,
@@ -68,7 +68,7 @@ func TestUserController_UserRegister(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: userRegisterInput{
 				username: usernameTooShortCase,
@@ -82,7 +82,7 @@ func TestUserController_UserRegister(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: userRegisterInput{
 				username: usernameInvalidCase,
@@ -166,7 +166,7 @@ func TestUserController_GetUserInfo(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: getUserInfoInput{
 				username: usernameTooLongCase,
@@ -181,7 +181,7 @@ func TestUserController_GetUserInfo(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: getUserInfoInput{
 				username: usernameTooShortCase,
@@ -196,7 +196,7 @@ func TestUserController_GetUserInfo(t *testing.T) {
 			mocks: func(
 				userService *mock.MockUserService,
 			) {
-				// it should not call the user registration method
+				// it should not call the service
 			},
 			input: getUserInfoInput{
 				username: usernameInvalidCase,

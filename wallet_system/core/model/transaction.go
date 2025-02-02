@@ -21,8 +21,8 @@ import (
 * Example usage:
 *   tx := Transfer{
 *       ID:        1,
-*       From:      "123456789",
-*       To:        "987654321",
+*       From:      "usera",
+*       To:        "userb",
 *       Amount:    100.0,
 *       Timestamp: time.Now(),
  */

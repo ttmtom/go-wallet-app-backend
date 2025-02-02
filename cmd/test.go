@@ -87,14 +87,14 @@ func userInfoHandler(ws *wallet_system.WalletSystem) {
 		fmt.Println("error on get user info: ", err.Error())
 	} else {
 
-		fmt.Println("`````````````````````````````")
+		fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		fmt.Println("Username: ", userInfo.Wallet.Username)
 		fmt.Println(fmt.Sprintf("Wallet Balance: %f", decimal.NewFromFloat(userInfo.Wallet.Balance).InexactFloat64()))
 		fmt.Println("Transaction history")
 		for _, v := range userInfo.TransactionHistories {
 			fmt.Println(v)
 		}
-		fmt.Println("`````````````````````````````")
+		fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		fmt.Println("user info end")
 	}
 }
