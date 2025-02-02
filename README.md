@@ -160,13 +160,14 @@ user info end
 -----------------------------
 ```
 
-## Review and Improve
+## Improve
 
 TODO list
 - [ ] Implement a mq system to handle concurrent transactions efficiently, on failure, transactions should be retried. 
 - [ ] Implement a user authentication system to ensure that only authorized users can access their wallets. 
 - [ ] Implement a transaction history feature to keep track of all transactions made by users, (includes the transaction status, timestamp, etc.). 
 - [ ] improve the database object design, e.g. update the primary to hash id, the relation between tables, etc. 
+- [ ] Implement the e2e tests to ensure that all components of the system work together as expected. 
 
 ## Work plan
 Total time spent on this task is 3 days (Approximately 15 hours in total)
